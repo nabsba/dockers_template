@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  mysql-development:
+    image: mysql
+    #to log into your container; open terminal and write -> docker exec -it mysql_connection_docker bash
+    container_name: mysql_connection_docker
+    restart: always
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    environment:
+      # create .env at .
+      MYSQL_ROOT_PASSWORD: ${PASSWORD_AUTHENTIFICATION_LOCAL}
+      MYSQL_DATABASE: ${DATA_BASE_NAME_AUTHENTIFICATION_LOCAL}
+  app:
+    build: ./app
+    container_name: connection_docker
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    stdin_open: true
